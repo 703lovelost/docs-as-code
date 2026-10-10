@@ -3,5 +3,19 @@ site_name: Docs as Code
 theme:
   name: readthedocs
 
+nav:
+  - Главная: index.md
+  - Проект:
+      - Описание: project/overview.md
+      - Функциональные требования: project/requirements.md
+      - Диаграммы: project/diagrams.md
+
 plugins:
   - search
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
