@@ -9,9 +9,15 @@ nav:
       - Описание: project/overview.md
       - Функциональные требования: project/requirements.md
       - Диаграммы: project/diagrams.md
+      - Документация API: api/index.md
 
 plugins:
   - search
+  - swagger-ui-tag:
+      docExpansion: list
+      filter: true
+      syntaxHighlightTheme: monokai
+      tryItOutEnabled: false
 
 markdown_extensions:
   - pymdownx.superfences:

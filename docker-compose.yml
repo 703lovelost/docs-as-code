@@ -1,0 +1,11 @@
+services:
+  mkdocs:
+    image: squidfunk/mkdocs-material:latest
+    ports:
+      - "10423:8000"
+    volumes:
+      - .:/docs
+    entrypoint: /bin/sh
+    command: >
+      -c "pip install --no-cache-dir mkdocs-swagger-ui-tag &&
+      mkdocs serve --dev-addr=0.0.0.0:8000"

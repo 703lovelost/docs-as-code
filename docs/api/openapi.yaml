@@ -1,0 +1,268 @@
+openapi: 3.0.3
+
+info:
+  title: AI Project API
+  description: API для классификации изображений с помощью ML-модели.
+  version: 1.0.0
+
+servers:
+  - url: https://example.com/api/v1
+
+security:
+  - bearerAuth: []
+
+paths:
+  /classifications:
+    post:
+      summary: Классифицировать изображение
+      description: Принимает изображение в Base64, классифицирует его и сохраняет результат.
+      operationId: createClassification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Image'
+      responses:
+        '200':
+          description: Классификация выполнена.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassificationResult'
+        '400':
+          description: Некорректный JSON или отсутствует обязательное поле.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: Bad Request
+                message: Некорректный запрос на классификацию.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ModelUnavailable'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /classifications/{id}:
+    get:
+      summary: Получить результат классификации
+      description: Возвращает сохранённую категорию, уверенность модели и изображение.
+      operationId: getClassification
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор классификации.
+          schema:
+            type: integer
+            minimum: 1
+          example: 123
+      responses:
+        '200':
+          description: Результат найден.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassificationDetails'
+        '400':
+          description: Некорректный идентификатор классификации.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Результат не найден.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: Not Found
+                message: Объекта классификации не существует.
+        '500':
+          $ref: '#/components/responses/InternalError'
+    patch:
+      summary: Проверить результат классификации
+      description: Подтверждает или отклоняет категорию изображения.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 123
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - approved
+                    - rejected
+                  description: Решение оператора разметки.
+                category:
+                  type: string
+                  description: Корректная категория при отклонении.
+                  example: "animal"
+      responses:
+        '200':
+          description: Результат проверки сохранён.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - status
+                  - category
+                properties:
+                  id:
+                    type: integer
+                    example: 123
+                  status:
+                    type: string
+                    enum:
+                      - approved
+                      - rejected
+                  category:
+                    type: string
+                    example: "animal"
+
+        '400':
+          description: Некорректные данные запроса.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '401':
+          description: Пользователь не авторизован.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Результат классификации не найден.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Image:
+      type: object
+      required:
+        - image
+      properties:
+        image:
+          type: string
+          format: byte
+          minLength: 1
+          description: Изображение, закодированное в Base64.
+
+    ClassificationResult:
+      type: object
+      required:
+        - id
+        - category
+        - confidence
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          example: 123
+          description: Идентификатор сохранённой классификации.
+        category:
+          type: string
+          example: human
+          description: Категория, определённая моделью.
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          example: 0.913
+          description: Уверенность модели в выбранной категории.
+
+    ClassificationDetails:
+      allOf:
+        - $ref: '#/components/schemas/ClassificationResult'
+        - type: object
+          required:
+            - image
+          properties:
+            image:
+              type: string
+              format: byte
+              description: Исходное изображение в Base64.
+
+    Error:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Тип ошибки.
+          example: Bad Request
+        message:
+          type: string
+          description: Описание ошибки.
+          example: Некорректный запрос.
+
+  responses:
+    Unauthorized:
+      description: Отсутствует или недействителен токен авторизации.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized
+            message: Отсутствует или недействителен токен авторизации.
+    ModelUnavailable:
+      description: ML-модель временно недоступна.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Service Unavailable
+            message: ML-модель временно недоступна. Повторите запрос позже.
+    InternalError:
+      description: Внутренняя ошибка сервера.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Internal Server Error
+            message: Произошла внутренняя ошибка при обработке запроса.
