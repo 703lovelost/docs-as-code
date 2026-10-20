@@ -37,7 +37,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
               example:
-                error: Bad Request
+                code: Bad Request
                 message: Некорректный запрос на классификацию.
         '401':
           $ref: '#/components/responses/Unauthorized'
@@ -82,7 +82,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
               example:
-                error: Not Found
+                code: 404 Not Found
                 message: Объекта классификации не существует.
         '500':
           $ref: '#/components/responses/InternalError'
@@ -226,13 +226,13 @@ components:
     Error:
       type: object
       required:
-        - error
+        - code
         - message
       properties:
-        error:
+        code:
           type: string
-          description: Тип ошибки.
-          example: Bad Request
+          description: Код ошибки.
+          example: 400 Bad Request
         message:
           type: string
           description: Описание ошибки.
@@ -246,7 +246,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            error: Unauthorized
+            code: 401 Unauthorized
             message: Отсутствует или недействителен токен авторизации.
     ModelUnavailable:
       description: ML-модель временно недоступна.
@@ -255,7 +255,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            error: Service Unavailable
+            code: 503 Service Unavailable
             message: ML-модель временно недоступна. Повторите запрос позже.
     InternalError:
       description: Внутренняя ошибка сервера.
@@ -264,5 +264,5 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            error: Internal Server Error
+            code: 500 Internal Server Error
             message: Произошла внутренняя ошибка при обработке запроса.
