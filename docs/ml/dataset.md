@@ -58,7 +58,7 @@
 
 ## Источники
 
-* Страница датасета на Hugging Face: [https://huggingface.co/datasets/ILSVRC/imagenet-1k]()
-* Официальный сайт ImageNet: [https://www.image-net.org/]()
-* Научная статья о датасете: Deng J. et al. ImageNet: A Large-Scale Hierarchical Image Database. CVPR, 2009. [https://doi.org/10.1109/CVPR.2009.5206848]()
-* Научная статья о соревновании ILSVRC: Russakovsky O. et al. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015. [https://doi.org/10.1007/s11263-015-0816-y]()s
+* Страница датасета на Hugging Face: [https://huggingface.co/datasets/ILSVRC/imagenet-1k](https://huggingface.co/datasets/ILSVRC/imagenet-1k)
+* Официальный сайт ImageNet: [https://www.image-net.org/](https://www.image-net.org/)
+* Научная статья о датасете: Deng J. et al. ImageNet: A Large-Scale Hierarchical Image Database. CVPR, 2009. [https://doi.org/10.1109/CVPR.2009.5206848](https://doi.org/10.1109/CVPR.2009.5206848)
+* Научная статья о соревновании ILSVRC: Russakovsky O. et al. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015. [https://doi.org/10.1007/s11263-015-0816-y](https://doi.org/10.1007/s11263-015-0816-y)

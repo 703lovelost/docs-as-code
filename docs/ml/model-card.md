@@ -61,7 +61,7 @@
 
 ## Источники
 
-* Страница модели на Hugging Face: [https://huggingface.co/google/efficientnet-b7]()
-* Страница обучающего датасета ImageNet-1k: [https://huggingface.co/datasets/ILSVRC/imagenet-1k]()
-* Научная статья авторов модели: Tan M., Le Q. V. EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks. ICML, 2019. [https://arxiv.org/abs/1905.11946]()
-* Официальная страница публикации Google Research: [https://research.google/pubs/efficientnet-rethinking-model-scaling-for-convolutional-neural-networks/]()
+* Страница модели на Hugging Face: [https://huggingface.co/google/efficientnet-b7](https://huggingface.co/google/efficientnet-b7)
+* Страница обучающего датасета ImageNet-1k: [https://huggingface.co/datasets/ILSVRC/imagenet-1k](https://huggingface.co/datasets/ILSVRC/imagenet-1k)
+* Научная статья авторов модели: Tan M., Le Q. V. EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks. ICML, 2019. [https://arxiv.org/abs/1905.11946](https://arxiv.org/abs/1905.11946)
+* Официальная страница публикации Google Research: [https://research.google/pubs/efficientnet-rethinking-model-scaling-for-convolutional-neural-networks/](https://research.google/pubs/efficientnet-rethinking-model-scaling-for-convolutional-neural-networks/)
