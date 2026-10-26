@@ -9,7 +9,12 @@ nav:
       - Описание: project/overview.md
       - Функциональные требования: project/requirements.md
       - Диаграммы: project/diagrams.md
+  - API:
       - Документация API: api/index.md
+  - ML:
+      - Model Card: ml/model-card.md
+      - Data Sheet: ml/dataset.md
+      - Риски: ml/risks.md
 
 plugins:
   - search
